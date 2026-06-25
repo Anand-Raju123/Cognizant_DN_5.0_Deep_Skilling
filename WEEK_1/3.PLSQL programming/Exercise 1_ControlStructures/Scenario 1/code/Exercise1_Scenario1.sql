@@ -1,52 +1,75 @@
-CREATE TABLE Customers (
-CustomerID NUMBER PRIMARY KEY,
-Name VARCHAR2(50),
-Age NUMBER,
-Balance NUMBER,
-IsVIP VARCHAR2(5)
+create table customers (
+   customerid number primary key,
+   name       varchar2(50),
+   age        number,
+   balance    number,
+   isvip      varchar2(5)
 );
-CREATE TABLE Loans (
-LoanID NUMBER PRIMARY KEY,
-CustomerID NUMBER,
-InterestRate NUMBER,
-DueDate DATE
+create table loans (
+   loanid       number primary key,
+   customerid   number,
+   interestrate number,
+   duedate      date
 );
-INSERT INTO Customers VALUES (1,'Karishma',65,15000,'FALSE');
-INSERT INTO Customers VALUES (2,'Gayatri',45,5000,'FALSE');
-INSERT INTO Customers VALUES (3,'Balasri',70,25000,'FALSE');
+insert into customers values ( 1,
+                               'Karishma',
+                               65,
+                               15000,
+                               'FALSE' );
+insert into customers values ( 2,
+                               'Gayatri',
+                               45,
+                               5000,
+                               'FALSE' );
+insert into customers values ( 3,
+                               'Nandhini',
+                               70,
+                               25000,
+                               'FALSE' );
 
-INSERT INTO Loans VALUES (101,1,10,SYSDATE+20);
-INSERT INTO Loans VALUES (102,2,12,SYSDATE+40);
-INSERT INTO Loans VALUES (103,3,9,SYSDATE+15);
-COMMIT;
+insert into loans values ( 101,
+                           1,
+                           10,
+                           sysdate + 20 );
+insert into loans values ( 102,
+                           2,
+                           12,
+                           sysdate + 40 );
+insert into loans values ( 103,
+                           3,
+                           9,
+                           sysdate + 15 );
+commit;
 
-SELECT * FROM Loans;
-SET SERVEROUTPUT ON;
-BEGIN
-FOR cust IN (
-SELECT CustomerID
-FROM Customers
-WHERE Age > 60
-)
-LOOP
-UPDATE Loans
-SET InterestRate = InterestRate - 1
-WHERE CustomerID = cust.CustomerID;
-END LOOP;
+select *
+  from loans;
+   SET SERVEROUTPUT ON;
+begin
+   for cust in (
+      select customerid
+        from customers
+       where age > 60
+   ) loop
+      update loans
+         set
+         interestrate = interestrate - 1
+       where customerid = cust.customerid;
+   end loop;
 
-COMMIT;
-
-DBMS_OUTPUT.PUT_LINE('Interest Discount Applied Successfully');
-END;
+   commit;
+   dbms_output.put_line('Interest Discount Applied Successfully');
+end;
 /
 
-SELECT * FROM Loans;
-SELECT * FROM Customers;
-SELECT c.CustomerID,
-       c.Name,
-       l.LoanID,
-       l.InterestRate,
-       l.DueDate
-FROM Customers c
-JOIN Loans l
-ON c.CustomerID = l.CustomerID;
+select *
+  from loans;
+select *
+  from customers;
+select c.customerid,
+       c.name,
+       l.loanid,
+       l.interestrate,
+       l.duedate
+  from customers c
+  join loans l
+on c.customerid = l.customerid;
