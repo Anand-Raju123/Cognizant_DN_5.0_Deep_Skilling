@@ -1,0 +1,35 @@
+body{
+
+    font-family: Arial;
+
+    margin:20px;
+
+}
+
+button{
+
+    margin-top:5px;
+
+    width:90px;
+
+}
+
+table{
+
+    margin-top:20px;
+
+}
+
+input{
+
+    width:140px;
+
+}
+
+textarea{
+
+    width:140px;
+
+    height:25px;
+
+}
